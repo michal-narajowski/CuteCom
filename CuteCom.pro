@@ -57,6 +57,7 @@ FORMS    += mainwindow.ui \
 
 RESOURCES += \
     resources.qrc
-
+    .qrc
+    qdarkstyle/style.qrc
 DISTFILES += \
     qt.astylerc

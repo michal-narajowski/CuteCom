@@ -4,5 +4,6 @@
         <file>images/terminal.svg</file>
         <file>close.png</file>
         <file>close_over.png</file>
+        <file>qdarkstyle/style.qss</file>
     </qresource>
 </RCC>
