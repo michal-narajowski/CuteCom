@@ -982,6 +982,7 @@ void MainWindow::processData()
 
     if (m_logFile.isOpen()) {
         m_logFile.write(data);
+        m_logFile.flush();
     }
     m_output_display->displayData(data);
 }
