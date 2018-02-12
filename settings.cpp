@@ -72,6 +72,9 @@ void Settings::settingChanged(Settings::Options option, QVariant setting)
     case DarkTheme:
         session.darkTheme = setting.toBool();
         break;
+    case MonospaceFont:
+        session.monoFont = setting.toBool();
+        break;
     case CommandHistory:
         session.command_history = setting.toStringList();
         break;
@@ -180,6 +183,7 @@ void Settings::readSessionSettings(QSettings &settings)
         session.showCtrlCharacters = settings.value("showCtrlCharacters", false).toBool();
         session.showTimestamp = settings.value("showTimestamp", false).toBool();
         session.darkTheme = settings.value("darkTheme", false).toBool();
+        session.monoFont = settings.value("monoFont", false).toBool();
         session.command_history = settings.value("History").toStringList();
 
         m_sessions.insert(name, session);
@@ -309,6 +313,7 @@ void Settings::saveSessionSettings()
             settings.setValue("showCtrlCharacters", session.showCtrlCharacters);
             settings.setValue("showTimestamp", session.showTimestamp);
             settings.setValue("darkTheme", session.darkTheme);
+            settings.setValue("monoFont", session.monoFont);
             settings.setValue("History", session.command_history);
         }
         settings.endArray();

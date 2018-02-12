@@ -35,6 +35,7 @@ public:
     void setSearchString(const QString &search);
     void setCharFormat(QTextCharFormat *format, Formats type);
     void setDarkTheme(bool darkTheme);
+    void setMonoFont(bool monoFont);
 
 protected:
     void highlightBlock(const QString &text) Q_DECL_OVERRIDE;
@@ -58,6 +59,11 @@ private:
      * Use light (default) or dark theme
      */
     bool m_darkTheme;
+
+    /**
+     * Use default or monospace font
+     */
+    bool m_monoFont;
 };
 
 #endif // DATAHIGHLIGHTER_H

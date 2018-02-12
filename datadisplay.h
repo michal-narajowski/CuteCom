@@ -64,6 +64,8 @@ public:
 
     void setDarkTheme(bool darkTheme);
 
+    void setMonoFont(bool monoFont);
+
     QTextDocument *getTextDocument();
 
 private:
@@ -120,6 +122,11 @@ private:
      * Use light (default) or dark theme
      */
     bool m_darkTheme;
+
+    /**
+     * Use default or monospace font
+     */
+    bool m_monoFont;
 
     /**
      * The container to store multiple formated

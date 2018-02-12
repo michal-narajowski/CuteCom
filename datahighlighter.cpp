@@ -55,6 +55,12 @@ void DataHighlighter::setDarkTheme(bool darkTheme)
     DataHighlighter::setupTextFormats();
 }
 
+void DataHighlighter::setMonoFont(bool monoFont)
+{
+    m_monoFont = monoFont;
+    DataHighlighter::setupTextFormats();
+}
+
 void DataHighlighter::setupTextFormats()
 {
     QColor format_colors[6];
@@ -88,8 +94,14 @@ void DataHighlighter::setupTextFormats()
     m_format_time.setForeground(format_colors[0]);
     m_format_bytes.setForeground(format_colors[1]);
     QFont font;
-    font.setFamily(font.defaultFamily());
-    font.setPointSize(10);
+    if (m_monoFont) {
+        font = QFont("Monospace");
+        font.setStyleHint(QFont::Courier);
+        font.setPointSize(10);
+    } else {
+        font.setFamily(font.defaultFamily());
+        font.setPointSize(10);
+    }
     m_format_bytes.setFont(font);
     m_format_ctrl.setForeground(format_colors[2]);
     m_format_ctrl.setFontWeight(QFont::Bold);
