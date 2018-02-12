@@ -47,6 +47,22 @@ int main(int argc, char *argv[])
     QString session = parser.value(sessionOption);
 
     MainWindow w(0, session);
+
+    /* Get session configuration to load theme option */
+    Settings *m_settings = new Settings(&w);
+    m_settings->readSettings(session);
+    const Settings::Session session_config = m_settings->getCurrentSession();
+
+    /* Apply dark stylesheet if selected */
+    if (session_config.darkTheme) {
+        //QFile file(":/res/styles/style.qss");
+        QFile file(":/qdarkstyle/style.qss");
+        if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            a.setStyleSheet(file.readAll());
+            file.close();
+        }
+    }
+
     QIcon appIcon;
     appIcon.addFile(QStringLiteral(":/images/terminal.svg"));
     w.setWindowIcon(appIcon);

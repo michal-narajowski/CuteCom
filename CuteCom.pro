@@ -58,7 +58,8 @@ FORMS    += mainwindow.ui \
     searchpanel.ui
 
 RESOURCES += \
-    resources.qrc
+    resources.qrc \
+    styles/qdarkstyle/style.qrc
 
 DISTFILES += \
     qt.astylerc

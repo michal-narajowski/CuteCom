@@ -50,11 +50,14 @@ ControlPanel::ControlPanel(QWidget *parent, Settings *settings)
     fillOpenModeCombo();
     m_check_lineBreak->setChecked(session.showCtrlCharacters);
     m_check_timestamp->setChecked(session.showTimestamp);
+    m_check_darkTheme->setChecked(session.darkTheme);
 
     connect(m_check_lineBreak, &QCheckBox::toggled,
             [=](bool checked) { emit settingChanged(Settings::ShowCtrlCharacters, checked); });
     connect(m_check_timestamp, &QCheckBox::toggled,
             [=](bool checked) { emit settingChanged(Settings::ShowTimestamp, checked); });
+    connect(m_check_darkTheme, &QCheckBox::toggled,
+            [=](bool checked) { emit settingChanged(Settings::DarkTheme, checked); });
     connect(this, &ControlPanel::settingChanged, settings, &Settings::settingChanged);
 
     applySessionSettings(session);
@@ -249,6 +252,7 @@ void ControlPanel::applySessionSettings(Settings::Session session)
 
     m_check_lineBreak->setChecked(session.showCtrlCharacters);
     m_check_timestamp->setChecked(session.showTimestamp);
+    m_check_darkTheme->setChecked(session.darkTheme);
 }
 
 void ControlPanel::fillDeviceCombo(const QString &deviceName)

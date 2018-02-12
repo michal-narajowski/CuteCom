@@ -183,6 +183,7 @@ MainWindow::MainWindow(QWidget *parent, const QString &session)
 
     m_output_display->setDisplayCtrlCharacters(m_settings->getCurrentSession().showCtrlCharacters);
     m_output_display->setDisplayTime(m_settings->getCurrentSession().showTimestamp);
+    m_output_display->setDarkTheme(m_settings->getCurrentSession().darkTheme);
     connect(controlPanel->m_check_timestamp, &QCheckBox::toggled, m_output_display, &DataDisplay::setDisplayTime);
     connect(controlPanel->m_check_lineBreak, &QCheckBox::toggled, m_output_display,
             &DataDisplay::setDisplayCtrlCharacters);
