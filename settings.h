@@ -42,6 +42,7 @@ public:
         ShowTimestamp,
         DarkTheme,
         MonospaceFont,
+        FontSize,
         CommandHistory,
         WindowGeometry,
         WindowState,
@@ -65,6 +66,7 @@ public:
         bool showTimestamp;
         bool darkTheme;
         bool monoFont;
+        int fontSize;
         QStringList command_history;
     };
 
