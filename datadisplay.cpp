@@ -41,6 +41,7 @@ DataDisplay::DataDisplay(QWidget *parent)
     , m_hexLeftOver(0)
     , m_displayHex(false)
     , m_displayCtrlCharacters(false)
+    , m_darkTheme(false)
     , m_linebreakChar('\n')
     , m_previous_ended_with_nl(true)
     , m_redisplay(false)
@@ -346,6 +347,18 @@ void DataDisplay::setLinebreakChar(const QString &chars)
         m_linebreakChar = '\n';
 }
 
+/*!
+ * \brief DataDisplay::setDarkTheme
+ * \param darkTheme
+ */
+void DataDisplay::setDarkTheme(bool darkTheme)
+{
+    m_darkTheme = darkTheme;
+    DataDisplay::setupTextFormats();
+    m_dataDisplay->setDarkTheme(m_darkTheme);
+    m_highlighter->setDarkTheme(m_darkTheme);
+}
+
 QTextDocument *DataDisplay::getTextDocument() { return m_dataDisplay->document(); }
 
 /*!
@@ -370,11 +383,29 @@ void DataDisplay::startSearch() { m_searchPanel->showPanel(true); }
 void DataDisplay::setupTextFormats()
 {
     // ToDo make this changeable via settings
-
+    QColor format_colors[4];
+    if (m_darkTheme) {
+        /* m_format_data. #eff0f1 from dark theme */
+        format_colors[0] = QColor(239, 240, 241);
+        /* m_dataDisplay. #3daee9 from dark theme */
+        format_colors[1] = QColor(61, 174, 233);
+        /* m_format_hex */
+        format_colors[2] = QColor(239, 240, 241);
+        /* m_format_ascii. #76797c from dark theme */
+        format_colors[3] = QColor(118, 121, 124);
+    } else {
+        /* m_format_data */
+        format_colors[0] = Qt::black;
+        /* m_dataDisplay */
+        format_colors[1] = QColor(100, 100, 200);
+        /* m_format_hex */
+        format_colors[2] = Qt::black;
+        /* m_format_ascii */
+        format_colors[3] = QColor(100, 100, 100);
+    }
     QTextCursor cursor = m_dataDisplay->textCursor();
     QTextCharFormat format = cursor.charFormat();
-    QColor col = QColor(Qt::black);
-    format.setForeground(col);
+    format.setForeground(format_colors[0]);
     QFont font;
     font.setFamily(font.defaultFamily());
     font.setPointSize(10);
@@ -382,12 +413,10 @@ void DataDisplay::setupTextFormats()
     m_format_data = new QTextCharFormat(format);
     //    qDebug() << m_format_data->foreground();
 
-    col = QColor(100, 100, 200);
-    format.setForeground(col);
+    format.setForeground(format_colors[1]);
     m_dataDisplay->setTimeFormat(new QTextCharFormat(format));
 
-    col = QColor(Qt::black);
-    format.setForeground(col);
+    format.setForeground(format_colors[2]);
     font = QFont("Monospace");
     font.setStyleHint(QFont::Courier);
     font.setPointSize(10);
@@ -396,8 +425,7 @@ void DataDisplay::setupTextFormats()
     format.setFont(font);
     m_format_hex = new QTextCharFormat(format);
 
-    col = QColor(100, 100, 100);
-    format.setForeground(col);
+    format.setForeground(format_colors[3]);
     m_format_ascii = new QTextCharFormat(format);
 }
 
@@ -499,9 +527,10 @@ bool DataDisplay::formatHexData(const QByteArray &inData)
  */
 DataDisplayPrivate::DataDisplayPrivate(DataDisplay *parent)
     : QPlainTextEdit(parent)
-    , m_timestampFormat(QStringLiteral("HH:mm:ss:zzz"))
+    , m_timestampFormat(QStringLiteral("HH:mm:ss:zzz "))
     , m_time_width(0)
     , m_timeView(new TimeView(this))
+    , m_darkTheme(false)
 {
     m_timestamps = new QVector<QTime>();
     connect(this, &QPlainTextEdit::updateRequest, this, &DataDisplayPrivate::updateTimeView);
@@ -529,7 +558,13 @@ void DataDisplayPrivate::resizeEvent(QResizeEvent *event)
 void DataDisplayPrivate::timeViewPaintEvent(QPaintEvent *event)
 {
     QPainter painter(m_timeView);
-    painter.fillRect(event->rect(), QColor(233, 233, 233));
+    if (m_darkTheme) {
+        fprintf(stderr, "SI");
+        painter.fillRect(event->rect(), QWidget::palette().color(QWidget::backgroundRole()).darker(150));
+    } else {
+        fprintf(stderr, "NO");
+        painter.fillRect(event->rect(), QColor(233, 233, 233)); 
+    }
     painter.setPen(m_format_time->foreground().color());
     painter.setFont(m_format_time->font());
     QTextBlock block = firstVisibleBlock();
@@ -580,11 +615,20 @@ void DataDisplayPrivate::setDisplayTime(bool displayTime)
 {
     if (displayTime) {
         QFontMetrics *metric = new QFontMetrics(m_format_time->font());
-        m_time_width = 3 + metric->width(QStringLiteral("00:00:00:000"));
+        m_time_width = 3 + metric->width(QStringLiteral("00:00:00:000 "));
     } else {
         m_time_width = 0;
     }
     setViewportMargins(m_time_width, 0, 0, 0);
+}
+
+/*!
+ * \brief DataDisplay::setDarkTheme
+ * \param darkTheme
+ */
+void DataDisplayPrivate::setDarkTheme(bool darkTheme)
+{
+    m_darkTheme = darkTheme;
 }
 
 QVector<QTime> *DataDisplayPrivate::timestamps() { return m_timestamps; }
