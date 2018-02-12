@@ -51,6 +51,7 @@ ControlPanel::ControlPanel(QWidget *parent, Settings *settings)
     m_check_lineBreak->setChecked(session.showCtrlCharacters);
     m_check_timestamp->setChecked(session.showTimestamp);
     m_check_darkTheme->setChecked(session.darkTheme);
+    m_check_monoFont->setChecked(session.monoFont);
 
     connect(m_check_lineBreak, &QCheckBox::toggled,
             [=](bool checked) { emit settingChanged(Settings::ShowCtrlCharacters, checked); });
@@ -58,6 +59,8 @@ ControlPanel::ControlPanel(QWidget *parent, Settings *settings)
             [=](bool checked) { emit settingChanged(Settings::ShowTimestamp, checked); });
     connect(m_check_darkTheme, &QCheckBox::toggled,
             [=](bool checked) { emit settingChanged(Settings::DarkTheme, checked); });
+    connect(m_check_monoFont, &QCheckBox::toggled,
+            [=](bool checked) { emit settingChanged(Settings::MonospaceFont, checked); });
     connect(this, &ControlPanel::settingChanged, settings, &Settings::settingChanged);
 
     applySessionSettings(session);
@@ -253,6 +256,7 @@ void ControlPanel::applySessionSettings(Settings::Session session)
     m_check_lineBreak->setChecked(session.showCtrlCharacters);
     m_check_timestamp->setChecked(session.showTimestamp);
     m_check_darkTheme->setChecked(session.darkTheme);
+    m_check_monoFont->setChecked(session.monoFont);
 }
 
 void ControlPanel::fillDeviceCombo(const QString &deviceName)
