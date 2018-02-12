@@ -42,6 +42,7 @@ DataDisplay::DataDisplay(QWidget *parent)
     , m_displayHex(false)
     , m_displayCtrlCharacters(false)
     , m_darkTheme(false)
+    , m_monoFont(false)
     , m_linebreakChar('\n')
     , m_previous_ended_with_nl(true)
     , m_redisplay(false)
@@ -359,6 +360,17 @@ void DataDisplay::setDarkTheme(bool darkTheme)
     m_highlighter->setDarkTheme(m_darkTheme);
 }
 
+/*!
+ * \brief DataDisplay::setMonoFont
+ * \param monoFont
+ */
+void DataDisplay::setMonoFont(bool monoFont)
+{
+    m_monoFont = monoFont;
+    DataDisplay::setupTextFormats();
+    m_highlighter->setMonoFont(m_monoFont);
+}
+
 QTextDocument *DataDisplay::getTextDocument() { return m_dataDisplay->document(); }
 
 /*!
@@ -407,8 +419,14 @@ void DataDisplay::setupTextFormats()
     QTextCharFormat format = cursor.charFormat();
     format.setForeground(format_colors[0]);
     QFont font;
-    font.setFamily(font.defaultFamily());
-    font.setPointSize(10);
+    if (m_monoFont) {
+        font = QFont("Monospace");
+        font.setStyleHint(QFont::Courier);
+        font.setPointSize(10);
+    } else {
+        font.setFamily(font.defaultFamily());
+        font.setPointSize(10);
+    }
     format.setFont(font);
     m_format_data = new QTextCharFormat(format);
     //    qDebug() << m_format_data->foreground();
