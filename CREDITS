@@ -61,6 +61,11 @@ compress multiple non printable characters
 Dmitry Mastykin
 mix hex and ascii input
 
+CieNTi <cienti@cienti.com> 
+https://github.com/CieNTi/CuteCom.git
+Added dark theme, monospace font and font size options.
+ColinDuquesnoy's Dark theme release used:
+- https://github.com/ColinDuquesnoy/QDarkStyleSheet/releases/tag/2.5.1
 
 IDEAS - still a ToDo:
 ====================================

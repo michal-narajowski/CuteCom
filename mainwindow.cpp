@@ -182,6 +182,9 @@ MainWindow::MainWindow(QWidget *parent, const QString &session)
     connect(m_settings, &Settings::sessionChanged, m_device_statusbar, &StatusBar::sessionChanged);
 
     m_output_display->setDisplayCtrlCharacters(m_settings->getCurrentSession().showCtrlCharacters);
+    m_output_display->setDarkTheme(m_settings->getCurrentSession().darkTheme);
+    m_output_display->setMonoFont(m_settings->getCurrentSession().monoFont);
+    m_output_display->setFontSize(m_settings->getCurrentSession().fontSize);
     m_output_display->setDisplayTime(m_settings->getCurrentSession().showTimestamp);
     connect(controlPanel->m_check_timestamp, &QCheckBox::toggled, m_output_display, &DataDisplay::setDisplayTime);
     connect(controlPanel->m_check_lineBreak, &QCheckBox::toggled, m_output_display,

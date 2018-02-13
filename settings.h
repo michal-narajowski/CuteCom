@@ -40,6 +40,9 @@ public:
         OpenMode,
         ShowCtrlCharacters,
         ShowTimestamp,
+        DarkTheme,
+        MonospaceFont,
+        FontSize,
         CommandHistory,
         WindowGeometry,
         WindowState,
@@ -61,6 +64,9 @@ public:
         QIODevice::OpenModeFlag openMode;
         bool showCtrlCharacters;
         bool showTimestamp;
+        bool darkTheme;
+        bool monoFont;
+        int fontSize;
         QStringList command_history;
     };
 

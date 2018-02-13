@@ -62,6 +62,12 @@ public:
 
     void setLinebreakChar(const QString &chars);
 
+    void setDarkTheme(bool darkTheme);
+
+    void setMonoFont(bool monoFont);
+
+    void setFontSize(int fontSize);
+
     QTextDocument *getTextDocument();
 
 private:
@@ -115,6 +121,21 @@ private:
     char m_linebreakChar;
 
     /**
+     * Use light (default) or dark theme
+     */
+    bool m_darkTheme;
+
+    /**
+     * Use default or monospace font
+     */
+    bool m_monoFont;
+
+    /**
+     * Font size
+     */
+    int m_fontSize;
+
+    /**
      * The container to store multiple formated
      * lines before beeing printed
      * @brief m_data
@@ -155,6 +176,8 @@ public:
 
     void setDisplayTime(bool displayTime);
 
+    void setDarkTheme(bool darkTheme);
+
 protected:
     void resizeEvent(QResizeEvent *event) Q_DECL_OVERRIDE;
     void updateTimeView(const QRect &, int);
@@ -170,6 +193,11 @@ private:
     int m_time_width;
     TimeView *m_timeView;
     QVector<QTime> *m_timestamps;
+
+    /**
+     * Use light (default) or dark theme
+     */
+    bool m_darkTheme;
 };
 
 #endif // DATADISPLAY_H

@@ -34,11 +34,16 @@ public:
     DataHighlighter(QTextDocument *parent = 0);
     void setSearchString(const QString &search);
     void setCharFormat(QTextCharFormat *format, Formats type);
+    void setDarkTheme(bool darkTheme);
+    void setMonoFont(bool monoFont);
+    void setFontSize(int fontSize);
 
 protected:
     void highlightBlock(const QString &text) Q_DECL_OVERRIDE;
 
 private:
+    void setupTextFormats();
+    
     QRegExp *m_pattern_time;
     QTextCharFormat m_format_time;
     QRegExp *m_pattern_bytes;
@@ -50,6 +55,21 @@ private:
     QTextCharFormat m_format_search;
 
     QString m_searchString;
+
+    /**
+     * Use light (default) or dark theme
+     */
+    bool m_darkTheme;
+
+    /**
+     * Use default or monospace font
+     */
+    bool m_monoFont;
+
+    /**
+     * Font size
+     */
+    int m_fontSize;
 };
 
 #endif // DATAHIGHLIGHTER_H

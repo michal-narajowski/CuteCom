@@ -23,26 +23,15 @@
 
 DataHighlighter::DataHighlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent)
+    , m_darkTheme(false)
+    , m_monoFont(false)
+    , m_fontSize(10)
 {
-    m_format_time.setForeground(Qt::darkGreen);
     m_pattern_time = new QRegExp("\\d{2,2}:\\d{2,2}:\\d{2,2}:\\d{3,3} ");
-    m_format_bytes.setForeground(QColor(120, 180, 200));
-    QFont font;
-    font.setFamily(font.defaultFamily());
-    font.setPointSize(10);
-    m_format_bytes.setFont(font);
     m_pattern_bytes = new QRegExp("^\\d{8} ");
-    m_format_ctrl.setForeground(Qt::darkRed);
-    m_format_ctrl.setFontWeight(QFont::Bold);
     m_pattern_ctrl = new QRegExp("[\\x240A\\x240D\\x21E5]");
-    font = QFont("Monospace");
-    font.setStyleHint(QFont::Courier);
-    font.setPointSize(10);
-    m_format_hex.setFont(font);
-    m_format_hex.setForeground(Qt::darkMagenta);
     m_pattern_hex = new QRegExp("<0x[\\da-f]{2}>");
-    m_format_search.setBackground(QColor(230, 230, 180));
-    m_format_search.setForeground(QColor(50, 50, 180));
+    DataHighlighter::setupTextFormats();
 }
 
 void DataHighlighter::setSearchString(const QString &search)
@@ -60,6 +49,80 @@ void DataHighlighter::setCharFormat(QTextCharFormat *format, DataHighlighter::Fo
     default:
         break;
     }
+}
+
+void DataHighlighter::setDarkTheme(bool darkTheme)
+{
+    m_darkTheme = darkTheme;
+    DataHighlighter::setupTextFormats();
+}
+
+void DataHighlighter::setMonoFont(bool monoFont)
+{
+    m_monoFont = monoFont;
+    DataHighlighter::setupTextFormats();
+}
+
+void DataHighlighter::setFontSize(int fontSize)
+{
+    m_fontSize = fontSize;
+    DataHighlighter::setupTextFormats();
+}
+
+void DataHighlighter::setupTextFormats()
+{
+    QColor format_colors[6];
+    if (m_darkTheme) {
+        /* m_format_time */
+        format_colors[0] = Qt::darkGreen;
+        /* m_format_bytes. #3daee9 from dark theme */
+        format_colors[1] = QColor(61, 174, 233);
+        /* m_format_ctrl */
+        format_colors[2] = QColor(61, 174, 233);
+        /* m_format_hex */
+        format_colors[3] = QColor(61, 174, 233);
+        /* m_format_search background */
+        format_colors[4] = QColor(61, 174, 233);
+        /* m_format_search foreground. #31363b from dark theme */
+        format_colors[5] = QColor(49, 54, 59);
+    } else {
+        /* m_format_time */
+        format_colors[0] = Qt::darkGreen;
+        /* m_format_bytes */
+        format_colors[1] = QColor(120, 180, 200);
+        /* m_format_ctrl */
+        format_colors[2] = Qt::darkRed;
+        /* m_format_hex */
+        format_colors[3] = Qt::darkMagenta;
+        /* m_format_search background */
+        format_colors[4] = QColor(230, 230, 180);
+        /* m_format_search foreground */
+        format_colors[5] = QColor(50, 50, 180);
+    }
+    m_format_time.setForeground(format_colors[0]);
+    m_format_bytes.setForeground(format_colors[1]);
+    QFont font;
+    if (m_monoFont) {
+        font = QFont("Monospace");
+        font.setStyleHint(QFont::Courier);
+    } else {
+        font.setFamily(font.defaultFamily());
+    }
+    if (m_fontSize < 7 || m_fontSize > 20)
+    {
+        m_fontSize = 10;
+    }
+    font.setPointSize(m_fontSize);
+    m_format_bytes.setFont(font);
+    m_format_ctrl.setForeground(format_colors[2]);
+    m_format_ctrl.setFontWeight(QFont::Bold);
+    font = QFont("Monospace");
+    font.setStyleHint(QFont::Courier);
+    font.setPointSize(m_fontSize);
+    m_format_hex.setFont(font);
+    m_format_hex.setForeground(format_colors[3]);
+    m_format_search.setBackground(format_colors[4]);
+    m_format_search.setForeground(format_colors[5]);
 }
 
 void DataHighlighter::highlightBlock(const QString &text)

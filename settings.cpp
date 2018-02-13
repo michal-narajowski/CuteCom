@@ -69,6 +69,15 @@ void Settings::settingChanged(Settings::Options option, QVariant setting)
     case ShowTimestamp:
         session.showTimestamp = setting.toBool();
         break;
+    case DarkTheme:
+        session.darkTheme = setting.toBool();
+        break;
+    case MonospaceFont:
+        session.monoFont = setting.toBool();
+        break;
+    case FontSize:
+        session.fontSize = setting.toInt();
+        break;
     case CommandHistory:
         session.command_history = setting.toStringList();
         break;
@@ -176,6 +185,9 @@ void Settings::readSessionSettings(QSettings &settings)
         session.device = settings.value("Device", QStringLiteral("/dev/ttyUSB0")).toString();
         session.showCtrlCharacters = settings.value("showCtrlCharacters", false).toBool();
         session.showTimestamp = settings.value("showTimestamp", false).toBool();
+        session.darkTheme = settings.value("darkTheme", false).toBool();
+        session.monoFont = settings.value("monoFont", false).toBool();
+        session.fontSize = settings.value("fontSize", false).toInt();
         session.command_history = settings.value("History").toStringList();
 
         m_sessions.insert(name, session);
@@ -304,6 +316,9 @@ void Settings::saveSessionSettings()
             settings.setValue("Device", session.device);
             settings.setValue("showCtrlCharacters", session.showCtrlCharacters);
             settings.setValue("showTimestamp", session.showTimestamp);
+            settings.setValue("darkTheme", session.darkTheme);
+            settings.setValue("monoFont", session.monoFont);
+            settings.setValue("fontSize", session.fontSize);
             settings.setValue("History", session.command_history);
         }
         settings.endArray();
