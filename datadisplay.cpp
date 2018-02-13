@@ -594,7 +594,7 @@ void DataDisplayPrivate::timeViewPaintEvent(QPaintEvent *event)
     if (m_darkTheme) {
         painter.fillRect(event->rect(), QWidget::palette().color(QWidget::backgroundRole()).darker(150));
     } else {
-        fprintf(stderr, "NO");
+        painter.fillRect(event->rect(), QColor(233, 233, 233));
     }
     painter.setPen(m_format_time->foreground().color());
     painter.setFont(m_format_time->font());
