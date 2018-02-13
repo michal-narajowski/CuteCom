@@ -24,6 +24,8 @@
 DataHighlighter::DataHighlighter(QTextDocument *parent)
     : QSyntaxHighlighter(parent)
     , m_darkTheme(false)
+    , m_monoFont(false)
+    , m_fontSize(10)
 {
     m_pattern_time = new QRegExp("\\d{2,2}:\\d{2,2}:\\d{2,2}:\\d{3,3} ");
     m_pattern_bytes = new QRegExp("^\\d{8} ");
@@ -58,6 +60,12 @@ void DataHighlighter::setDarkTheme(bool darkTheme)
 void DataHighlighter::setMonoFont(bool monoFont)
 {
     m_monoFont = monoFont;
+    DataHighlighter::setupTextFormats();
+}
+
+void DataHighlighter::setFontSize(int fontSize)
+{
+    m_fontSize = fontSize;
     DataHighlighter::setupTextFormats();
 }
 
@@ -97,17 +105,20 @@ void DataHighlighter::setupTextFormats()
     if (m_monoFont) {
         font = QFont("Monospace");
         font.setStyleHint(QFont::Courier);
-        font.setPointSize(10);
     } else {
         font.setFamily(font.defaultFamily());
-        font.setPointSize(10);
     }
+    if (m_fontSize < 7 || m_fontSize > 20)
+    {
+        m_fontSize = 10;
+    }
+    font.setPointSize(m_fontSize);
     m_format_bytes.setFont(font);
     m_format_ctrl.setForeground(format_colors[2]);
     m_format_ctrl.setFontWeight(QFont::Bold);
     font = QFont("Monospace");
     font.setStyleHint(QFont::Courier);
-    font.setPointSize(10);
+    font.setPointSize(m_fontSize);
     m_format_hex.setFont(font);
     m_format_hex.setForeground(format_colors[3]);
     m_format_search.setBackground(format_colors[4]);

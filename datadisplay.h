@@ -66,6 +66,8 @@ public:
 
     void setMonoFont(bool monoFont);
 
+    void setFontSize(int fontSize);
+
     QTextDocument *getTextDocument();
 
 private:
@@ -127,6 +129,11 @@ private:
      * Use default or monospace font
      */
     bool m_monoFont;
+
+    /**
+     * Font size
+     */
+    int m_fontSize;
 
     /**
      * The container to store multiple formated

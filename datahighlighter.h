@@ -36,6 +36,7 @@ public:
     void setCharFormat(QTextCharFormat *format, Formats type);
     void setDarkTheme(bool darkTheme);
     void setMonoFont(bool monoFont);
+    void setFontSize(int fontSize);
 
 protected:
     void highlightBlock(const QString &text) Q_DECL_OVERRIDE;
@@ -64,6 +65,11 @@ private:
      * Use default or monospace font
      */
     bool m_monoFont;
+
+    /**
+     * Font size
+     */
+    int m_fontSize;
 };
 
 #endif // DATAHIGHLIGHTER_H
