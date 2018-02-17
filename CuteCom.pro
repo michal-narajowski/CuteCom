@@ -64,6 +64,4 @@ RESOURCES += \
 DISTFILES += \
     qt.astylerc
 
-QMAKE_LFLAGS += -no-pie
-
 RC_ICONS = images/cutecom.ico
