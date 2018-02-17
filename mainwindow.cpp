@@ -135,6 +135,7 @@ MainWindow::MainWindow(QWidget *parent, const QString &session)
     connect(removeSelected, &QAction::triggered, this, &MainWindow::removeSelectedInputItems);
 
     connect(m_command_history, &QListWidget::customContextMenuRequested, [=](const QPoint &pos) {
+        (void)pos;
         // show the 'remove selected' action in the context menu only when row in the list is selected
         if (true == m_command_history->selectionModel()->hasSelection()) {
             removeSelected->setVisible(true);
@@ -991,6 +992,7 @@ void MainWindow::processData()
 
 void MainWindow::removeSelectedInputItems(bool checked)
 {
+    (void)checked;
     if (true == m_command_history->selectionModel()->hasSelection()) {
         QList<QModelIndex> selectedItems = m_command_history->selectionModel()->selectedIndexes();
         // sort indexes in descending order - sorting is required to properly delete from the qlistwidget
