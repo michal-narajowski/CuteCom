@@ -40,7 +40,7 @@ if(APPLE)
    set(binInstallDir /Applications )
 endif(APPLE)
 
-add_executable(cutecom ${exeType} ${cutecomSrcs} ${uiHeaders} resources.qrc)
+add_executable(cutecom ${exeType} ${cutecomSrcs} ${uiHeaders} resources.qrc styles/qdarkstyle/style.qrc)
 
 
 qt5_use_modules(cutecom Core Gui Widgets SerialPort)
