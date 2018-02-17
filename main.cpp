@@ -55,7 +55,6 @@ int main(int argc, char *argv[])
 
     /* Apply dark stylesheet if selected */
     if (session_config.darkTheme) {
-        //QFile file(":/res/styles/style.qss");
         QFile file(":/qdarkstyle/style.qss");
         if(file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             a.setStyleSheet(file.readAll());
