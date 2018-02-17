@@ -20,9 +20,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # Find the Qt libraries
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
 #find_package(Serialport REQUIRED)
 
 qt5_wrap_ui(uiHeaders controlpanel.ui  mainwindow.ui statusbar.ui sessionmanager.ui searchpanel.ui)
