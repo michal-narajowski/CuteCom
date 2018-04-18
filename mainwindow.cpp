@@ -391,6 +391,7 @@ void MainWindow::closeDevice()
     m_command_history->setEnabled(false);
     if (m_logFile.isOpen()) {
         m_logFile.flush();
+        m_logFile.close();
     }
 }
 
@@ -438,12 +439,20 @@ void MainWindow::printDeviceInfo()
 
 void MainWindow::toggleLogging(bool start)
 {
-    if (m_logFile.isOpen() == start) {
+    QString currentLogFileName = m_lb_logfile->text();
+
+    if (m_logFile.isOpen() == start
+        && m_logFile.fileName() == currentLogFileName) {
         return;
     }
 
     if (start) {
-        m_logFile.setFileName(m_lb_logfile->text());
+        if (m_logFile.fileName() != currentLogFileName) {
+            m_logFile.flush();
+            m_logFile.close();
+            m_logFile.setFileName(m_lb_logfile->text());
+        }
+
         QIODevice::OpenMode mode = QIODevice::ReadWrite;
         mode = (controlPanel->m_check_appendLog->isChecked()) ? mode | QIODevice::Append : mode | QIODevice::Truncate;
 
@@ -986,6 +995,7 @@ void MainWindow::processData()
 
     if (m_logFile.isOpen()) {
         m_logFile.write(data);
+        m_logFile.flush();
     }
     m_output_display->displayData(data);
 }
