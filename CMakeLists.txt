@@ -72,6 +72,7 @@ SET(CUTECOM_PIXMAPS_DIR     "/usr/share/icons/")
 INSTALL (FILES cutecom.desktop DESTINATION ${CUTECOM_DESKTOP_DIR})
 INSTALL (FILES images/cutecom.svg DESTINATION ${CUTECOM_PIXMAPS_DIR})
 
+set (CPACK_DEBIAN_PACKAGE_SHLIBDEPS ON)
 configure_file (
     "${CMAKE_CURRENT_SOURCE_DIR}/distribution/rpm-generic.spec.in" 
     "${CMAKE_CURRENT_BINARY_DIR}/cutecom.spec"
