@@ -43,6 +43,7 @@ DataDisplay::DataDisplay(QWidget *parent)
     , m_displayCtrlCharacters(false)
     , m_linebreakChar('\n')
     , m_darkTheme(false)
+    , m_lineWrap(false)
     , m_monoFont(false)
     , m_fontSize(10)
     , m_previous_ended_with_nl(true)
@@ -321,7 +322,11 @@ void DataDisplay::setDisplayHex(bool displayHex)
         m_displayHex = displayHex;
     } else {
         displayDataFromBuffer();
-        m_dataDisplay->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+        if (m_lineWrap) {
+            m_dataDisplay->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+        } else {
+            m_dataDisplay->setLineWrapMode(QPlainTextEdit::NoWrap);
+        }
         m_displayHex = displayHex;
         // make sure new data arriving after
         // switching to hex output is being displayed
@@ -359,6 +364,20 @@ void DataDisplay::setDarkTheme(bool darkTheme)
     DataDisplay::setupTextFormats();
     m_dataDisplay->setDarkTheme(m_darkTheme);
     m_highlighter->setDarkTheme(m_darkTheme);
+}
+
+/*!
+ * \brief DataDisplay::setLineWrap
+ * \param lineWrap
+ */
+void DataDisplay::setLineWrap(bool lineWrap)
+{
+    m_lineWrap = lineWrap;
+    if (m_lineWrap) {
+        m_dataDisplay->setLineWrapMode(QPlainTextEdit::WidgetWidth);
+    } else {
+        m_dataDisplay->setLineWrapMode(QPlainTextEdit::NoWrap);
+    }
 }
 
 /*!

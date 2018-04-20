@@ -51,6 +51,7 @@ ControlPanel::ControlPanel(QWidget *parent, Settings *settings)
     m_check_lineBreak->setChecked(session.showCtrlCharacters);
     m_check_timestamp->setChecked(session.showTimestamp);
     m_check_darkTheme->setChecked(session.darkTheme);
+    m_check_lineWrap->setChecked(session.lineWrap);
     m_check_monoFont->setChecked(session.monoFont);
     m_fontSize_edit->setText(QString::number(session.fontSize));
 
@@ -60,6 +61,8 @@ ControlPanel::ControlPanel(QWidget *parent, Settings *settings)
             [=](bool checked) { emit settingChanged(Settings::ShowTimestamp, checked); });
     connect(m_check_darkTheme, &QCheckBox::toggled,
             [=](bool checked) { emit settingChanged(Settings::DarkTheme, checked); });
+    connect(m_check_lineWrap, &QCheckBox::toggled,
+            [=](bool checked) { emit settingChanged(Settings::LineWrap, checked); });
     connect(m_check_monoFont, &QCheckBox::toggled,
             [=](bool checked) { emit settingChanged(Settings::MonospaceFont, checked); });
     connect(m_fontSize_edit, &QLineEdit::editingFinished,
@@ -259,6 +262,7 @@ void ControlPanel::applySessionSettings(Settings::Session session)
     m_check_lineBreak->setChecked(session.showCtrlCharacters);
     m_check_timestamp->setChecked(session.showTimestamp);
     m_check_darkTheme->setChecked(session.darkTheme);
+    m_check_lineWrap->setChecked(session.lineWrap);
     m_check_monoFont->setChecked(session.monoFont);
     m_fontSize_edit->setText(QString::number(session.fontSize));
 }

@@ -64,6 +64,8 @@ public:
 
     void setDarkTheme(bool darkTheme);
 
+    void setLineWrap(bool lineWrap);
+
     void setMonoFont(bool monoFont);
 
     void setFontSize(int fontSize);
@@ -124,6 +126,11 @@ private:
      * Use light (default) or dark theme
      */
     bool m_darkTheme;
+
+    /**
+     * Wrap lines in data display
+     */
+    bool m_lineWrap;
 
     /**
      * Use default or monospace font

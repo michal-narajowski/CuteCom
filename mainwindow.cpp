@@ -184,6 +184,7 @@ MainWindow::MainWindow(QWidget *parent, const QString &session)
 
     m_output_display->setDisplayCtrlCharacters(m_settings->getCurrentSession().showCtrlCharacters);
     m_output_display->setDarkTheme(m_settings->getCurrentSession().darkTheme);
+    m_output_display->setLineWrap(m_settings->getCurrentSession().lineWrap);
     m_output_display->setMonoFont(m_settings->getCurrentSession().monoFont);
     m_output_display->setFontSize(m_settings->getCurrentSession().fontSize);
     m_output_display->setDisplayTime(m_settings->getCurrentSession().showTimestamp);
@@ -371,6 +372,8 @@ void MainWindow::openDevice()
             m_bt_sendfile->setEnabled(true);
             m_command_history->setEnabled(true);
         }
+
+        m_output_display->setLineWrap(m_settings->getCurrentSession().lineWrap);
     }
 }
 

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>628</width>
-    <height>130</height>
+    <width>714</width>
+    <height>165</height>
    </rect>
   </property>
   <property name="autoFillBackground">
@@ -43,7 +43,7 @@
      <item row="1" column="2">
       <widget class="QLabel" name="label_parity">
        <property name="text">
-        <string>&amp;Parity</string>
+        <string>Parit&amp;y</string>
        </property>
        <property name="buddy">
         <cstring>m_combo_parity</cstring>
@@ -82,6 +82,13 @@
         <widget class="QCheckBox" name="m_check_darkTheme">
          <property name="text">
           <string>Dark theme</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="m_check_lineWrap">
+         <property name="text">
+          <string>Wrap lines</string>
          </property>
         </widget>
        </item>
@@ -307,7 +314,7 @@
      <item>
       <widget class="QLabel" name="label_device">
        <property name="text">
-        <string>&amp;Device:</string>
+        <string>De&amp;vice:</string>
        </property>
        <property name="buddy">
         <cstring>m_combo_device</cstring>

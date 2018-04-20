@@ -41,6 +41,7 @@ public:
         ShowCtrlCharacters,
         ShowTimestamp,
         DarkTheme,
+        LineWrap,
         MonospaceFont,
         FontSize,
         CommandHistory,
@@ -65,6 +66,7 @@ public:
         bool showCtrlCharacters;
         bool showTimestamp;
         bool darkTheme;
+        bool lineWrap;
         bool monoFont;
         int fontSize;
         QStringList command_history;
