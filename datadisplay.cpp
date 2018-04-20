@@ -101,6 +101,8 @@ void DataDisplay::displayDataFromBuffer(void)
     // stop auto scrolling if the user scrolled to
     // to older data
     QScrollBar *sb = m_dataDisplay->verticalScrollBar();
+    QScrollBar *sbHoriz = m_dataDisplay->horizontalScrollBar();
+    int horiz_val = sbHoriz->value();
     int save_scroll = sb->value();
     bool save_max = (save_scroll == sb->maximum());
 
@@ -149,6 +151,8 @@ void DataDisplay::displayDataFromBuffer(void)
         sb->setValue(sb->maximum());
     else
         sb->setValue(save_scroll);
+
+    sbHoriz->setValue(horiz_val);
 }
 /*!
  * Prepare data and buffer them in m_data.
