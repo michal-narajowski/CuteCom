@@ -131,6 +131,11 @@ MainWindow::MainWindow(QWidget *parent, const QString &session)
         saveCommandHistory();
     });
 
+    QAction *removeSelectedShortcut = new QAction(this);
+    removeSelectedShortcut->setShortcut(Qt::ALT | Qt::Key_Delete);
+    connect(removeSelectedShortcut, &QAction::triggered, this, &MainWindow::removeSelectedInputItems);
+    this->addAction(removeSelectedShortcut);
+
     // define an action to delete the selected row from the list
     connect(removeSelected, &QAction::triggered, this, &MainWindow::removeSelectedInputItems);
 
@@ -1007,10 +1012,14 @@ void MainWindow::removeSelectedInputItems(bool checked)
 {
     (void)checked;
     if (true == m_command_history->selectionModel()->hasSelection()) {
+        int scroll_val = m_command_history->verticalScrollBar()->value();
+
         QList<QModelIndex> selectedItems = m_command_history->selectionModel()->selectedIndexes();
         // sort indexes in descending order - sorting is required to properly delete from the qlistwidget
         std::sort(selectedItems.begin(), selectedItems.end(),
                   [](const QModelIndex &a, const QModelIndex &b) { return b.row() < a.row(); });
+
+        int nextRow = selectedItems.first().row() + 1 - selectedItems.size();
         m_command_history->setUpdatesEnabled(false);
         for (auto item = selectedItems.begin(); item != selectedItems.end(); ++item) {
             if (true == item->isValid()) {
@@ -1018,6 +1027,8 @@ void MainWindow::removeSelectedInputItems(bool checked)
             }
         }
         m_command_history->setUpdatesEnabled(true);
+        m_command_history->verticalScrollBar()->setValue(scroll_val);
+        m_command_history->setCurrentRow(nextRow);
         saveCommandHistory();
     }
 }
