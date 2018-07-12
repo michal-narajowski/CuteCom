@@ -85,6 +85,8 @@ ControlPanel::ControlPanel(QWidget *parent, Settings *settings)
     connect(m_bt_open, &QPushButton::clicked, this, &ControlPanel::toggleDevice);
     connect(m_combo_Baud, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
             &ControlPanel::customBaudRate);
+    connect(m_combo_device, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), this,
+            &ControlPanel::customDevice);
 }
 
 /**
@@ -184,6 +186,27 @@ void ControlPanel::customBaudRateSet()
     m_combo_Baud->setItemText(m_combo_Baud->currentIndex(), m_baud_edit->text());
     settingChanged(Settings::BaudRate, m_baud_edit->text().toInt());
 }
+
+void ControlPanel::customDevice(int index)
+{
+    Q_UNUSED(index);
+    if (m_combo_device->currentData() == -1) {
+        m_combo_device->setEditable(true);
+
+        m_device_edit = m_combo_device->lineEdit();
+//        m_device_edit->setValidator(m_baudValidator);
+        m_device_edit->selectAll();
+        connect(m_device_edit, &QLineEdit::editingFinished, this, &ControlPanel::customDeviceSet);
+    }
+}
+
+void ControlPanel::customDeviceSet()
+{
+    m_combo_device->setEditable(false);
+    m_combo_device->setItemText(m_combo_device->currentIndex(), m_device_edit->text());
+    settingChanged(Settings::Device, m_device_edit->text());
+}
+
 
 void ControlPanel::applySessionSettings(Settings::Session session)
 {

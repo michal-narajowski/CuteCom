@@ -78,6 +78,8 @@ private:
     void toggleDevice(bool open);
     void customBaudRate(int index);
     void customBaudRateSet();
+    void customDevice(int index);
+    void customDeviceSet();
     void chooseLogFile();
 
     /**
@@ -95,6 +97,7 @@ private:
     bool m_menuVisible;
     QIntValidator *m_baudValidator;
     QLineEdit *m_baud_edit;
+    QLineEdit *m_device_edit;
 };
 
 #endif // CONTROLPANEL_H

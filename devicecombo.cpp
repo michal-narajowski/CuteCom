@@ -82,4 +82,8 @@ void DeviceCombo::refill()
         addItem(selection);
         setCurrentIndex(numberDevices);
     }
+
+    insertSeparator(90); // append this separator at the end
+    addItem(QStringLiteral("Custom"), -1);
+
 }
